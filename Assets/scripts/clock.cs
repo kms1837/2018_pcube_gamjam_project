@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+class resultObject {
+    public int hour;
+    public int minute;
+    public string success;
+    public string fail;
+    public List<string> message;
+}
+
 public class clock : MonoBehaviour {
     public Text ClockLabel;
     public Text SecondLabel;
@@ -17,9 +26,11 @@ public class clock : MonoBehaviour {
 
     private float limit;
 
-    private Coroutine clockRoutine = null;
+    private Coroutine clockRoutine;
 
-    private const int startHour = 6;
+    resultObject resultData;
+
+    private const int startHour = 5;
     private const int endHour = 9;
     private const float startSpeed = 0.1f;
     private const float accel = 0.02f;
@@ -37,6 +48,9 @@ public class clock : MonoBehaviour {
 
         InvokeRepeating("clockSpeedAccel", 1.0f, 1.0f);
         clockRoutine = StartCoroutine(clockCounter());
+
+        TextAsset jsonText = Resources.Load("json/clock_counter") as TextAsset;
+        resultData = JsonUtility.FromJson<resultObject>(jsonText.text);
     }
 	
 	void Update () {
@@ -49,26 +63,40 @@ public class clock : MonoBehaviour {
         AccelLabel.text = clockSpeed.ToString();
     }
 
-    void clockSpeedAccel() {
+    private void clockSpeedAccel() {
         clockSpeed = clockSpeed > limit ? clockSpeed - accel : limit;
     }
 
-    void secondVisual() {
+    private void secondVisual() {
         second++;
         second = second % 60;
-    }
-
-    void gameOver(){
-        Debug.Log("game over");
-        stopClock();
-
-        second = 0;
     }
 
     public void stopClock() {
         Debug.Log("game Stop");
         CancelInvoke("secondVisual");
         StopCoroutine(clockRoutine);
+
+        string resultStr = string.Empty;
+
+        int result = hour % startHour;
+        if (hour == resultData.hour && minute < resultData.minute) {
+            resultStr = resultData.success;
+        } else {
+            resultStr = result >= resultData.message.Count ? resultData.fail : resultData.message[result];
+        }
+
+        Debug.Log(resultStr);
+    }
+
+    void gameOver() {
+        stopClock();
+
+        second = 0;
+    }
+
+    private void gameResult() {
+
     }
 
     IEnumerator clockCounter() {
