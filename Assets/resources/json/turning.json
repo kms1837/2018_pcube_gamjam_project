@@ -2,28 +2,29 @@
     "turning" : [
         {
             "no": 0,
-            "question": "짜장면과 짬뽕중 무엇을 선택하겠는가?",
-            "answer": [
-                {
-                    "type": "ending",
-                    "text": "짬뽕",
-                    "next": 0
-                },
-                {
-                    "type": "ending",
-                    "text": "짜장",
-                    "next": 0
-                }
-            ]
-        },
-        {
-            "no": 1,
             "question": "오늘은 좀 피곤한 것 같은데...",
             "answer": [
                 {
                     "type": "next",
                     "text": "Yes",
-                    "next": 2
+                    "next": 1
+                },
+                {
+                    "type": "next",
+                    "text": "No",
+                    "next": 3
+                }
+            ]
+        },
+        {
+            "no": 1,
+            "question": "내가 오늘까지 해야 할일이 남았던가?",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "Yes",
+                    "next": 2,
+                    "failList": ["그때 잠자지 말고 일이나 끝낼걸..", "지각도 하고 일도 못끝내고..."]
                 },
                 {
                     "type": "next",
@@ -34,65 +35,53 @@
         },
         {
             "no": 2,
-            "question": "내가 오늘까지 해야 할일이 남았던가?",
-            "answer": [
-                {
-                    "type": "next",
-                    "text": "Yes",
-                    "next": 3
-                },
-                {
-                    "type": "next",
-                    "text": "No",
-                    "next": 5
-                }
-            ]
-        },
-        {
-            "no": 3,
             "question": "조금만 잘까?",
             "answer": [
                 {
-                    "type": "ending",
+                    "type": "game",
                     "text": "Yes",
-                    "next": 0
+                    "next": 2,
+                    "load": "alarm_clock"
                 },
                 {
                     "type": "next",
                     "text": "No",
-                    "next": 4
+                    "next": 3
                 }
             ]
         }, 
         {
-            "no": 4,
+            "no": 3,
             "question": "내일 만날 사람이 있었나?",
             "answer": [
                 {
                     "type": "next",
                     "text": "Yes",
-                    "next": 5
+                    "next": 4,
+                    "failList": ["약속에 늦어서 사이가 서먹해졌다...", "그 약속이 마지막 이였을 줄은...", "그날 안 늦었어도 공짜 음식이..."]
                 },
                 {
-                    "type": "ending",
+                    "type": "load",
                     "text": "No",
-                    "next": 0
+                    "next": 4
                 }
             ]
         },
         {
-            "no": 5,
+            "no": 4,
             "question": "오늘은 일찍 잘까?",
             "answer": [
                 {
-                    "type": "ending",
+                    "type": "game",
                     "text": "Yes",
-                    "next": 0
+                    "next": 4,
+                    "load": "MiniGame_TimingSheep"
                 },
                 {
-                    "type": "ending",
+                    "type": "game",
                     "text": "No",
-                    "next": 0
+                    "next": 4,
+                    "load": "alarm_clock"
                 }
             ]
         }
