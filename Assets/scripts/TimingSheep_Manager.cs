@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class TimingSheep_Manager : MonoBehaviour {
 
-    public GameObject[] SheepPreFab;//불러올 양
-    public GameObject[] SheepPreFab_Mini;//누적될 미니 양
-    public GameObject Btn_Catch;//잡았다! 버튼
-    public GameObject Round; //잡아야
+    public static Sheep sh;
 
-    public Transform Sheep_TransForm; //이동시킬 양
+    public GameObject Btn_Catch;//잡았다! 버튼
+    public GameObject Btn_Catch2;//잡았다! 버튼
+    public GameObject Btn_CatchTxt;//잡았다! 버튼
+    public GameObject Round; //
 
     public Text Txt_MsgText;//잡았는지 표시될 텍스트
     public Text Txt_Score;//잡으면 증가될 점수
@@ -37,6 +37,10 @@ public class TimingSheep_Manager : MonoBehaviour {
     void Start () {
         Screen.SetResolution(Screen.width, Screen.width * 9 / 16, true); // 해상도 고정
         Txt_Score.text = Score.ToString(); // 점수 표시
+
+        Btn_Catch.SetActive(true);
+        Btn_Catch2.SetActive(false);
+        Btn_CatchTxt.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -49,6 +53,10 @@ public class TimingSheep_Manager : MonoBehaviour {
         Expression_Basic.SetActive(true);
         Expression_Frown.SetActive(false);
         Expression_Success.SetActive(false);
+
+        Btn_Catch.SetActive(true);
+        Btn_Catch2.SetActive(false);
+        Btn_CatchTxt.SetActive(false);
     }
 
     public void Btn_MsgText_Click()
@@ -60,9 +68,15 @@ public class TimingSheep_Manager : MonoBehaviour {
             Expression_Basic.SetActive(false);
             Expression_Frown.SetActive(false);
             Expression_Success.SetActive(true);
+
+            Btn_Catch.SetActive(false);
+            Btn_Catch2.SetActive(true);
+            Btn_CatchTxt.SetActive(true);
+
             Txt_MsgText.text = "좋아!";
             Debug.Log("누름");
             Score += 1;
+
             Txt_Score.text = Score.ToString(); // 점수 표시
 
             //InvokeRepeating("Return_ExpressionBasic", 2.0f, 2.0f);
@@ -81,6 +95,7 @@ public class TimingSheep_Manager : MonoBehaviour {
             Expression_Basic.SetActive(false);
             Expression_Frown.SetActive(true);
             Expression_Success.SetActive(false);
+
             Txt_MsgText.text = "아...안돼...";
             Debug.Log("놓침");
 
