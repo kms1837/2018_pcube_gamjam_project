@@ -8,23 +8,16 @@ public class SheepPrefab : MonoBehaviour
 
     //public GameObject[] SheepPreFab;//불러올 양
     public GameObject SheepPF;//불러올 양
-    public GameObject[] SheepPreFab_Mini;//누적될 미니 양
     public Transform CanvasS;
 
     public Transform SheepTransForm;
     public int Sheepcount = 0; //양 몇 마리 지나갔니?
 
     /*------------------------- 
-     * 시작 위치, 
-     * 잡아야할 중간 위치, 
-     * 없어지는 마지막 위치
      * 이동해야될 위치 배열
      * 현재 위치
      * 이동위치 인덱스
      -------------------------*/
-    //private Vector3 StartPosition;
-    //private Vector3 CenterPosition;
-    //private Vector3 EndPosition;
     private Vector3[] PositionPoints;
     private Vector3 currPosition;
     private int PointsIndex = 0;
@@ -57,11 +50,17 @@ public class SheepPrefab : MonoBehaviour
             GameObject Sheep = Instantiate(SheepPF, Vector2.zero, Quaternion.identity) as GameObject;
             Sheep.transform.SetParent(CanvasS);
             Sheep.transform.localPosition = new Vector3(-94f, -183f, 0);
+            Sheepcount++;
             //StartCoroutine(this.createSheep());
         }
-        //StartCoroutine(this.createSheep());
-    }
+        print(Sheepcount);
 
+        if(Sheepcount == 20)
+        {
+            TS_Manager.GameOver();
+        }
+    }
+    
     //IEnumerator createSheep()
     //{
     //    while (!TS_Manager.isGameOver && PointsIndex < PositionPoints.Length)

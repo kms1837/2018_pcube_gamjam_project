@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class TimingSheep_Manager : MonoBehaviour {
 
-    public static Sheep sh;
+    public static TimingSheep_Manager TM = null;
+
+    public static SheepPrefab sh;
 
     public GameObject Btn_Catch;//잡았다! 버튼
     public GameObject Btn_Catch2;//잡았다! 버튼
     public GameObject Btn_CatchTxt;//잡았다! 버튼
+    public GameObject[] SheepPreFab_Mini;//누적될 미니 양
     public GameObject Round; //
 
     public Text Txt_MsgText;//잡았는지 표시될 텍스트
@@ -42,13 +45,17 @@ public class TimingSheep_Manager : MonoBehaviour {
         Btn_Catch2.SetActive(false);
         Btn_CatchTxt.SetActive(false);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        //transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * Time.deltaTime);
-}
 
-    void Return_ExpressionBasic()
+    void Awake()
+    {
+        TimingSheep_Manager.TM = this;
+    }
+    // Update is called once per frame
+    void Update () {
+        //transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * Time.deltaTime);
+    }
+
+    public void Return_ExpressionBasic()
     {
         Expression_Basic.SetActive(true);
         Expression_Frown.SetActive(false);
@@ -78,8 +85,7 @@ public class TimingSheep_Manager : MonoBehaviour {
             Score += 1;
 
             Txt_Score.text = Score.ToString(); // 점수 표시
-
-            //InvokeRepeating("Return_ExpressionBasic", 2.0f, 2.0f);
+            
             Invoke("Return_ExpressionBasic", 1.0f);
             ispopedup = true;
 
@@ -104,12 +110,14 @@ public class TimingSheep_Manager : MonoBehaviour {
         }
     }
 
-    void GameOver()
+    public void GameOver()
     {
         if (isGameOver == false)
         {
             isGameOver = true;
             Ending_Notsleep.SetActive(true);
+            Time.timeScale = 0;
+            GetComponent<AudioSource>().Pause();
         }
     }
 }

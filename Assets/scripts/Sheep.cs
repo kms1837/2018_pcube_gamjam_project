@@ -46,7 +46,7 @@ public class Sheep : MonoBehaviour {
         PositionPoints = new Vector3[3];
 
         PositionPoints.SetValue(new Vector3(356.0f, 617.0f, 0), 0);//처음
-        PositionPoints.SetValue(new Vector3(765.0f, 1026.0f, 0), 1);//가운데
+        PositionPoints.SetValue(new Vector3(850.0f, 976.0f, 0), 1);//가운데
         PositionPoints.SetValue(new Vector3(1365.4f, 617.0f, 0), 2);//사라질 마지막 위치
     }
 	
@@ -92,29 +92,11 @@ public class Sheep : MonoBehaviour {
 
         if(Vector3.Distance(PositionPoints[1], currPosition) == 0f)
         {
-            GetComponent<TimingSheep_Manager>().isCatch = true;
+            //TS_Manager.isCatch = true;
             isMoveClick = true;
         }
 
         isMoveClick = false;
-
-
     }
 
-    //IEnumerator createSheep()
-    //{
-    //    while(!TS_Manager.isGameOver && PointsIndex < PositionPoints.Length)
-    //    {
-    //        int SheepCount = (int)GameObject.FindGameObjectsWithTag("SheepPreFab").Length;
-
-    //        if (SheepCount < 2)
-    //        {
-    //            yield return new WaitForSeconds(createTime);
-
-    //            Instantiate(SheepPreFab);
-    //            gameObject.SetActive(true);
-    //        }
-    //        else yield return null;
-    //    }
-    //}
 }
