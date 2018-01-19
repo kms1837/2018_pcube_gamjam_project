@@ -16,6 +16,7 @@ public class clock : MonoBehaviour {
     public Text ClockLabel;
     public Text SecondLabel;
     public Text AccelLabel;
+    public GameObject resultPanel;
 
     private int hour;
     private int minute;
@@ -54,12 +55,12 @@ public class clock : MonoBehaviour {
     }
 	
 	void Update () {
-        string minuteStr = minute / 10 <= 0 ? "0" + minute.ToString() : minute.ToString();
-        string hourStr = hour / 10 <= 0 ? "0" + hour.ToString() : hour.ToString();
-        string secondStr = second / 10 <= 0 ? "0" + second.ToString() : second.ToString();
+        string minuteStr = minute / 10 <= 0 ? string.Format("0{0}", minute.ToString()) : minute.ToString();
+        string hourStr = hour / 10 <= 0 ? string.Format("0{0}", hour.ToString()) : hour.ToString();
+        string secondStr = second / 10 <= 0 ? string.Format("0{0}", second.ToString()) : second.ToString();
         
-        ClockLabel.text = hourStr + ":" + minuteStr;
-        SecondLabel.text = "." + secondStr;
+        ClockLabel.text = string.Format("{0}:{1}", hourStr, minuteStr);
+        SecondLabel.text = string.Format(".{0}", secondStr);
         AccelLabel.text = clockSpeed.ToString();
     }
 
@@ -73,11 +74,14 @@ public class clock : MonoBehaviour {
     }
 
     public void stopClock() {
-        Debug.Log("game Stop");
         CancelInvoke("secondVisual");
         StopCoroutine(clockRoutine);
 
         string resultStr = string.Empty;
+
+        string minuteStr = minute / 10 <= 0 ? string.Format("0{0}", minute.ToString()) : minute.ToString();
+        string hourStr = hour / 10 <= 0 ? string.Format("0{0}", hour.ToString()) : hour.ToString();
+        string secondStr = second / 10 <= 0 ? string.Format("0{0}", second.ToString()) : second.ToString();
 
         int result = hour % startHour;
         if (hour == resultData.hour && minute < resultData.minute) {
@@ -86,7 +90,13 @@ public class clock : MonoBehaviour {
             resultStr = result >= resultData.message.Count ? resultData.fail : resultData.message[result];
         }
 
-        Debug.Log(resultStr);
+        Text resultTextLabel = resultPanel.transform.Find("Text").GetComponent<Text>();
+        resultTextLabel.text = resultStr;
+
+        Text resultTimeLabel = resultPanel.transform.Find("TimeLabel").GetComponent<Text>();
+        resultTimeLabel.text = string.Format("{0}:{1}", hourStr, minuteStr);
+
+        resultPanel.SetActive(true);
     }
 
     void gameOver() {
