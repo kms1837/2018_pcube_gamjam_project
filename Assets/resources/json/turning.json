@@ -1,0 +1,100 @@
+{
+    "turning" : [
+        {
+            "no": 0,
+            "question": "짜장면과 짬뽕중 무엇을 선택하겠는가?",
+            "answer": [
+                {
+                    "type": "ending",
+                    "text": "짬뽕",
+                    "next": 0
+                },
+                {
+                    "type": "ending",
+                    "text": "짜장",
+                    "next": 0
+                }
+            ]
+        },
+        {
+            "no": 1,
+            "question": "오늘은 좀 피곤한 것 같은데...",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "Yes",
+                    "next": 2
+                },
+                {
+                    "type": "next",
+                    "text": "No",
+                    "next": 4
+                }
+            ]
+        },
+        {
+            "no": 2,
+            "question": "내가 오늘까지 해야 할일이 남았던가?",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "Yes",
+                    "next": 3
+                },
+                {
+                    "type": "next",
+                    "text": "No",
+                    "next": 5
+                }
+            ]
+        },
+        {
+            "no": 3,
+            "question": "조금만 잘까?",
+            "answer": [
+                {
+                    "type": "ending",
+                    "text": "Yes",
+                    "next": 0
+                },
+                {
+                    "type": "next",
+                    "text": "No",
+                    "next": 4
+                }
+            ]
+        }, 
+        {
+            "no": 4,
+            "question": "내일 만날 사람이 있었나?",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "Yes",
+                    "next": 5
+                },
+                {
+                    "type": "ending",
+                    "text": "No",
+                    "next": 0
+                }
+            ]
+        },
+        {
+            "no": 5,
+            "question": "오늘은 일찍 잘까?",
+            "answer": [
+                {
+                    "type": "ending",
+                    "text": "Yes",
+                    "next": 0
+                },
+                {
+                    "type": "ending",
+                    "text": "No",
+                    "next": 0
+                }
+            ]
+        }
+    ]
+}
