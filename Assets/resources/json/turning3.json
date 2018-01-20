@@ -1,0 +1,165 @@
+{
+    "turning" : [
+        {
+            "no": 0,
+            "question": "뭐하며 놀아야 할까?",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "집에서 논다",
+                    "next": 1
+                },
+                {
+                    "type": "fail",
+                    "text": "무계획으로 밖에 나간다",
+                    "next": 8,
+                    "failList": ["집 나가면 개고생인것을 깨닿게 되었다", "그냥 떠돌다 돌아왔다", "겁나서 집근처 산책만 하다왔다.", "혼자 뭘 할수가 없었다."]
+                },
+                {
+                    "type": "next",
+                    "text": "친구집에 간다",
+                    "next": 3
+                },
+                {
+                    "type": "next",
+                    "text": "쇼핑을 한다",
+                    "next": 4
+                }
+            ]
+        },
+        {
+            "no": 1,
+            "question": "집에서 어떻게 놓면 좋을까?",
+            "answer": [
+                {
+                    "type": "game",
+                    "text": "시간 계획적으로 논다",
+                    "load": "alarm_clock",
+                    "next": 8,
+                    "failList": ["이왕 집에서 논거 시간걱정없이 놀았어야 했는데..", "놀아도 논것 같지않아...", "밖에 나갈걸 그랬어..."],
+                    "achievement": 5
+                },
+                {
+                    "type": "next",
+                    "text": "대충 논다",
+                    "next": 2
+                }
+            ]
+        },
+        {
+            "no": 2,
+            "question": "당신은 눈에 보이는것을 갖고 놀려고 한다.",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "게임기",
+                    "next": 3
+                },
+                {
+                    "type": "fail",
+                    "text": "수학의 정석",
+                    "failList": ["풀다가 졸았어...", "공부가 크게 되진않았어...", "밖에 나갈걸 그랬어..."],
+                    "next": 8
+                }
+            ]
+        },
+        {
+            "no": 3,
+            "question": "오늘은 진지하게 게임을 해볼까?",
+            "answer": [
+                {
+                    "type": "fail",
+                    "text": "진지하게 게임한다.",
+                    "failList": ["진지하게 한 나머지 스트레스로 돌아왔다.", "아 게임졌다"],
+                    "next": 8
+                },
+                {
+                    "type": "achievement",
+                    "text": "즐겁게 게임한다.",
+                    "next": 8,
+                    "achievement": 2
+                }
+            ]
+        },
+        {
+            "no": 4,
+            "question": "친구집에 어떤식으로 갈까?",
+            "answer": [
+                {
+                    "type": "fail",
+                    "text": "습격한다.",
+                    "failList": ["친구네 친척이 와있었다...", "친구가 화났다..."],
+                    "next": 8
+                },
+                {
+                    "type": "next",
+                    "text": "전화하고간다.",
+                    "next": 8
+                }
+            ]
+        },
+        {
+            "no": 5,
+            "question": "무엇을 쇼핑할까?",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "식재료",
+                    "next": 6
+                },
+                {
+                    "type": "next",
+                    "text": "옷",
+                    "next": 7
+                }
+            ]
+        },
+        {
+            "no": 6,
+            "question": "특이해 보이는 식재료를 발견했다!",
+            "answer": [
+                {
+                    "type": "fail",
+                    "text": "당장 구입!",
+                    "next": 8,
+                    "failList": ["조리하다가 날려먹었다...", "두달후 냉장고에서 발견했다.", "맛없었다.", "가격이 너무 비싸!"]
+                },
+                {
+                    "type": "next",
+                    "text": "전에 사던거나 산다.",
+                    "next": 8
+                }
+            ]
+        },
+        {
+            "no": 7,
+            "question": "어떤옷을 구입할까?",
+            "answer": [
+                {
+                    "type": "next",
+                    "text": "적당한옷",
+                    "next": 8
+                },
+                {
+                    "type": "fail",
+                    "text": "고급진 옷",
+                    "next": 8,
+                    "failList": ["비싸고 촌스러웠다.", "몇일후 똑같은 옷이 50%세일을 했다..", "아까워서 몇번 안입는다..."]
+                }
+            ]
+        },
+        {
+            "no": 8,
+            "question": "어쨋든 잘놀았다 좀 쉬어야겠다.",
+            "answer": [
+                {
+                    "type": "game",
+                    "text": "휴식한다.",
+                    "next": 8,
+                    "load": "json/turning4",
+                    "failList": ["쉬는것도 일이네...", "자려다 스트레스 받는다."]
+                }
+            ]
+        }
+    ]
+}

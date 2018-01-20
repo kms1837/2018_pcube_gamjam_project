@@ -24,7 +24,8 @@ class answernObject
     public string text;
     public string next;
     public string load;
-    public List<string> failList;
+    public List<string> failList; // 실패시 대사
+    public string achievement;
 }
 
 public class TurningPoint : MonoBehaviour {
@@ -74,20 +75,28 @@ public class TurningPoint : MonoBehaviour {
     private void Update () {
     }
 
+    private void pushFail(answernObject answern) {
+        failMsg = failMsg == string.Empty ? "후회된다..." : failMsg;
+        failMsg = string.Format("[{0}]\n{1}", answern.text, failMsg);
+        Ending.regret.Add(failMsg);
+    }
+
     private void reLoadGame() {
         loadJSon(turningFileName);
         nowQuetion = turningData.turning[questionPoint];
 
         if (answerType == "game") {
+            answernObject selectAnswern = nowQuetion.answer[answerPoint];
             if (gameState) {
                 successPoint++;
+                if (selectAnswern.achievement != null) {
+                    Ending.achievements.Add(selectAnswern.achievement);
+                }
             } else {
-                failMsg = failMsg == string.Empty ? "후회된다..." : failMsg;
-                Debug.Log(failMsg);
-                Ending.regret.Add(failMsg);
+                pushFail(selectAnswern);
             }
 
-            int nextIndex = int.Parse(nowQuetion.answer[answerPoint].next);
+            int nextIndex = int.Parse(selectAnswern.next);
             nowQuetion = turningData.turning[nextIndex];
         }
 
@@ -100,7 +109,7 @@ public class TurningPoint : MonoBehaviour {
 
         turningFileName = fileName;
 
-        nowQuetion = turningData.turning[1];
+        nowQuetion = turningData.turning[0];
     }
 
     private void selectAnswer(int selectNumber) {
@@ -115,27 +124,43 @@ public class TurningPoint : MonoBehaviour {
         answerType = answerResult.type;
         answerPoint = selectNumber;
 
+        if (answerResult.failList.Count > 0) {
+            failMsg = answerResult.failList[Random.Range(0, answerResult.failList.Count)];
+        }
+
+        int nextIndex = int.Parse(answerResult.next);
         switch (answerResult.type) {
+            case "achievement":
+                Ending.achievements.Add(answerResult.achievement);
+                nextQuestion(nextIndex);
+                break;
             case "next":
-                if (answerResult.failList.Count > 0) {
-                    failMsg = answerResult.failList[Random.Range(0, answerResult.failList.Count)];
-                }
-                int nextIndex = int.Parse(nowQuetion.answer[selectNumber].next);
-                nowQuetion = turningData.turning[nextIndex];
-                questionPoint = nextIndex;
-                runTyping();
+                nextQuestion(nextIndex);
+                break;
+            case "fail":
+                pushFail(answerResult);
+                nextQuestion(nextIndex);
                 break;
             case "game":
-                moveScene(nowQuetion.answer[selectNumber].load);
+                moveScene(answerResult.load);
                 break;
             case "load":
-                loadJSon(nowQuetion.answer[selectNumber].load);
+                loadJSon(answerResult.load);
                 turningPoint = turningPoint + 1;
                 if (turningPoint >= endingPoint) {
                     moveScene("ending");
                 }
                 break;
+            case "ending":
+                moveScene("ending");
+                break;
         }
+    }
+
+    private void nextQuestion(int nextIndex) {
+        nowQuetion = turningData.turning[nextIndex];
+        questionPoint = nextIndex;
+        runTyping();
     }
 
     private void moveScene(string sceneName) {
@@ -178,7 +203,7 @@ public class TurningPoint : MonoBehaviour {
 
     private void answerRotation() {
         Rect view = Camera.main.rect;
-        float width = (view.width / 2) - 130;
+        float width = (view.width / 2) - 100;
         float height = (view.height / 2) - 380;
         float rx = 0.0f, ry = 0.0f;
         float rad = 0.0f;
@@ -237,8 +262,8 @@ public class TurningPoint : MonoBehaviour {
         if (panel.color.a <= 0.0f) {
             startPanel.SetActive(false);
 
-            loadJSon("json/turning");
-            questionPoint = 1;
+            loadJSon("json/turning2");
+            questionPoint = 0;
             runTyping();
             CancelInvoke("startFadeOut");
         }

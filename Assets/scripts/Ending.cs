@@ -15,10 +15,12 @@ public class Ending : MonoBehaviour
 
     private Transform AchievementGroup;
 
+    public static List<string> achievements = new List<string>();
+
     void Start() {
         if (regret.Count > 0) {
             foreach (string text in regret) {
-                FailLabel.text += "\n" + text;
+                FailLabel.text += string.Format("\n{0}\n", text);
             }
         } else {
             FailLabel.text += "\n 후회없는 완벽한 인생이였습니다.";
@@ -34,7 +36,7 @@ public class Ending : MonoBehaviour
         Rect view = Camera.main.rect;
         Vector2 labelPosition = CreditLabel.transform.position;
 
-        labelPosition.y += 10.0f;
+        labelPosition.y += 4.0f;
 
         CreditLabel.transform.position = labelPosition;
 
@@ -48,8 +50,12 @@ public class Ending : MonoBehaviour
         Rect iconSIze = AchievementIcon.GetComponent<RectTransform>().rect;
         Rect view = Camera.main.rect;
         
-        int achievement = 8;
+        int achievement = achievements.Count;
         int gap = 10;
+
+        if (achievements.Count <= 0) {
+            achievements.Add("4");
+        } // 업적 후회가득 인생 획득
 
         float startPoint = -(maxWidth / 2) + (iconSIze.width / 2);
 
@@ -65,7 +71,11 @@ public class Ending : MonoBehaviour
             GameObject newIcon = Instantiate(AchievementIcon, Vector2.zero, Quaternion.identity);
             newIcon.transform.SetParent(AchievementGroup);
 
-            newIcon.transform.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+            Image iconImage = newIcon.transform.GetComponent<Image>();
+
+            iconImage.color = new Color(255, 255, 255, 0);
+
+            iconImage.overrideSprite = Resources.Load<Sprite>("img/icon" + achievements[i]);
 
             newIcon.transform.localPosition = new Vector2(width, height);
 
@@ -103,9 +113,11 @@ public class Ending : MonoBehaviour
             }
         }
 
-        child = AchievementGroup.GetChild(childCount-1).GetComponent<Image>();
-        if (child.color.a >= 1.0f) {
-            CancelInvoke("achievementIconFade");
+        if (childCount > 0) {
+            child = AchievementGroup.GetChild(childCount - 1).GetComponent<Image>();
+            if (child.color.a >= 1.0f) {
+                CancelInvoke("achievementIconFade");
+            }
         }
     }
 }

@@ -2,99 +2,158 @@
     "turning" : [
         {
             "no": 0,
-            "question": "짜장면과 짬뽕중 무엇을 선택하겠는가?",
+            "question": "갑자기 남는 시간이 생겼어! 무슨 일을 하는게 좋을까?",
             "answer": [
                 {
-                    "type": "ending",
-                    "text": "짬뽕",
-                    "next": 0
+                    "type": "next",
+                    "text": "컴퓨터 게임",
+                    "next": 1
                 },
                 {
-                    "type": "ending",
-                    "text": "짜장",
-                    "next": 0
+                    "type": "next",
+                    "text": "운동하기",
+                    "next": 2
+                },
+                {
+                    "type": "next",
+                    "text": "그림그리기",
+                    "next": 3
                 }
             ]
         },
         {
             "no": 1,
-            "question": "오늘은 좀 피곤한 것 같은데...",
+            "question": "부모님이 오시기전에 컴퓨터를 꺼야한다!",
             "answer": [
                 {
-                    "type": "next",
+                    "type": "game",
                     "text": "Yes",
-                    "next": 2
-                },
-                {
-                    "type": "next",
-                    "text": "No",
-                    "next": 4
+                    "load": "alarm_clock",
+                    "next": 4,
+                    "failList": ["적당히 하고 껐어야 했는데!", "컴퓨터를 일주일간 못하게 되었다..."]
                 }
             ]
         },
         {
             "no": 2,
-            "question": "내가 오늘까지 해야 할일이 남았던가?",
+            "question": "공부를 하려면 체력이 우선이지! 오늘은 얼머나 운동을 할까?",
             "answer": [
                 {
-                    "type": "next",
+                    "type": "game",
                     "text": "Yes",
-                    "next": 3
-                },
-                {
-                    "type": "next",
-                    "text": "No",
-                    "next": 5
+                    "load": "alarm_clock",
+                    "next": 4,
+                    "failList": ["아 힘들어..."]
                 }
             ]
         },
         {
             "no": 3,
-            "question": "조금만 잘까?",
+            "question": "수채화가 너무 재밌어! 붓을 방금 물에 담갔는데 언제까지 담그고 있는게 좋을까?",
             "answer": [
                 {
                     "type": "game",
                     "text": "Yes",
-                    "next": "alarm_clock"
-                },
-                {
-                    "type": "next",
-                    "text": "No",
-                    "next": 4
+                    "load": "alarm_clock",
+                    "next": 4,
+                    "failList": ["피카소가 울고갈 그림이 완성되 버렸다...", ""],
+                    "achievement": 5
                 }
             ]
-        }, 
+        },
         {
             "no": 4,
-            "question": "내일 만날 사람이 있었나?",
+            "question": "오늘 저녁은 무엇을 먹을까? 새로운 식당에 가볼까?",
             "answer": [
                 {
-                    "type": "next",
+                    "type": "game",
                     "text": "Yes",
-                    "next": 5
+                    "next": 5,
+                    "failList": ["그 식당 다시는 안가!", "최악의 식당이였어..."]
                 },
                 {
-                    "type": "ending",
+                    "type": "achievement",
                     "text": "No",
-                    "next": 0
+                    "next": 5,
+                    "achievement": 7
                 }
             ]
         },
         {
             "no": 5,
-            "question": "오늘은 일찍 잘까?",
+            "question": "배가 고프다... 무슨 요리를 해먹을까?",
+            "answer": [
+                {
+                    "type": "game",
+                    "text": "김치찌개",
+                    "load": "alarm_clock",
+                    "next": 6,
+                    "failList": ["찌개에서 아무맛도 안나..", "라면이나 먹을걸..."],
+                    "achievement": 6
+                },
+                {
+                    "type": "game",
+                    "text": "라면",
+                    "load": "alarm_clock",
+                    "next": 6,
+                    "failList": ["라면도 못끓이다니...", "한강에 빠진 라면이야...", "세상에 맛없는 라면이 여기 존재하네.."],
+                    "achievement": 6
+                }, 
+                {
+                    "type": "game",
+                    "text": "떡볶이",
+                    "load": "alarm_clock",
+                    "next": 6,
+                    "failList": ["새까만 떡볶이를 만들어 버렸어...", "맹맹한 국물 떡볶이까 되버렸어...", "라면이나 먹을걸..."],
+                    "achievement": 6
+                }
+            ]
+        },
+        {
+            "no": 6,
+            "question": "오늘따라 왜 이렇게 피곤하지.. 잠깐 낮잠 좀 잘까?",
             "answer": [
                 {
                     "type": "game",
                     "text": "Yes",
-                    "next": "MiniGame_TimingSheep"
+                    "load": "alarm_clock",
+                    "next": 7,
+                    "failList": ["낮잠을 자기 말았어야 했다...", "피곤할때 잠깐 낮잠은 불가능해..."]
                 },
                 {
-                    "type": "game",
+                    "type": "next",
                     "text": "No",
-                    "next": "alarm_clock"
+                    "next": 7,
+                    "failList": ["아 피곤해 오늘 제대로 못놀겠는걸..."]
                 }
             ]
-        }
-    ]
+        },
+        {
+            "no": 7,
+            "question": "아 맞다! 내일 오랜만에 친구랑 약속이 있어! 얼른 자야겠지?",
+            "answer": [
+                {
+                    "type": "game",
+                    "text": "얼른 잠을자자",
+                    "load": "MiniGame_TimingSheep",
+                    "next": 8
+                },
+                {
+                    "type": "fail",
+                    "text": "그냥 적당히 더 놀다 자자",
+                    "next": 8
+                }
+            ]
+        },
+        {
+            "no": 8,
+            "question": "오늘은 무슨일이 일어날까?",
+            "answer": [
+                {
+                    "type": "ending",
+                    "text": "문을 열고 밖으로 나간다",
+                    "next": 0
+                }
+            ]
+        }]
 }
