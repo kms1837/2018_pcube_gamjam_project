@@ -29,6 +29,11 @@ class answernObject
 }
 
 public class TurningPoint : MonoBehaviour {
+    void Awake()
+    {
+        Screen.SetResolution(900, 1600, false);
+        //1920x1080
+    }
     //장면 상태 저장
     public static string turningFileName = string.Empty;
     public static string answerType = string.Empty; // 전에 선택한 선택지 타입
@@ -96,11 +101,17 @@ public class TurningPoint : MonoBehaviour {
                 pushFail(selectAnswern);
             }
 
-            int nextIndex = int.Parse(selectAnswern.next);
-            nowQuetion = turningData.turning[nextIndex];
-        }
+            Debug.Log(nowQuetion.question);
+            Debug.Log("==========================");
+            Debug.Log(answerType);
+            Debug.Log("qp :" + questionPoint);
+            Debug.Log("ap :" + answerPoint.ToString());
+            Debug.Log("sp :" + selectAnswern.next);
+            Debug.Log("==========================");
 
-        runTyping();
+            int nextIndex = int.Parse(selectAnswern.next);
+            nextQuestion(nextIndex);
+        }
     }
 
     private void loadJSon(string fileName) {
@@ -116,13 +127,13 @@ public class TurningPoint : MonoBehaviour {
         answernObject answerResult = nowQuetion.answer[selectNumber];
         source.PlayOneShot(AnswerEffectSound);
 
+        answerType = answerResult.type;
+        answerPoint = selectNumber;
+
         if (answerGroup != null) {
             Destroy(answerGroup.gameObject);
             answerGroup = null;
         }
-
-        answerType = answerResult.type;
-        answerPoint = selectNumber;
 
         if (answerResult.failList.Count > 0) {
             failMsg = answerResult.failList[Random.Range(0, answerResult.failList.Count)];
@@ -158,13 +169,18 @@ public class TurningPoint : MonoBehaviour {
     }
 
     private void nextQuestion(int nextIndex) {
-        nowQuetion = turningData.turning[nextIndex];
         questionPoint = nextIndex;
+        nowQuetion = turningData.turning[nextIndex];
         runTyping();
     }
 
     private void moveScene(string sceneName) {
         CancelInvoke();
+        Debug.Log("==========================");
+        Debug.Log("qp :" + questionPoint);
+        Debug.Log("ap :" + answerPoint.ToString());
+        Debug.Log("sp :" + nowQuetion.answer[answerPoint].next);
+        Debug.Log("==========================");
         SceneManager.LoadScene(sceneName);
     }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimingSheep_Manager : MonoBehaviour {
 
@@ -123,6 +124,8 @@ public class TimingSheep_Manager : MonoBehaviour {
 
     public void GameOver()
     {
+        TurningPoint.gameState = true;
+
         if (isGameOver == false)
         {
             isGameOver = true;
@@ -130,5 +133,7 @@ public class TimingSheep_Manager : MonoBehaviour {
             Time.timeScale = 0;
             GetComponent<AudioSource>().Pause();
         }
+
+        SceneManager.LoadScene("turning_point");
     }
 }

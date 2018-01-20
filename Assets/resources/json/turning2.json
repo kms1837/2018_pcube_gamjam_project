@@ -68,6 +68,7 @@
                 {
                     "type": "game",
                     "text": "Yes",
+                    "load": "MiniGame_TimingSheep",
                     "next": 5,
                     "failList": ["그 식당 다시는 안가!", "최악의 식당이였어..."]
                 },
@@ -118,7 +119,7 @@
                     "text": "Yes",
                     "load": "alarm_clock",
                     "next": 7,
-                    "failList": ["낮잠을 자기 말았어야 했다...", "피곤할때 잠깐 낮잠은 불가능해..."]
+                    "failList": ["낮잠을 자지 말았어야 했다...", "피곤할때 잠깐 낮잠은 불가능해..."]
                 },
                 {
                     "type": "next",

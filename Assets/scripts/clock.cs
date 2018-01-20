@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 class resultObject {
@@ -86,6 +87,7 @@ public class clock : MonoBehaviour {
         int result = hour % startHour;
         if (hour == resultData.hour && minute < resultData.minute) {
             resultStr = resultData.success;
+            TurningPoint.gameState = true;
         } else {
             resultStr = result >= resultData.message.Count ? resultData.fail : resultData.message[result];
         }
@@ -103,6 +105,10 @@ public class clock : MonoBehaviour {
         stopClock();
 
         second = 0;
+    }
+
+    public void gameExit() {
+        SceneManager.LoadScene("turning_point");
     }
 
     private void gameResult() {
