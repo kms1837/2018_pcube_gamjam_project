@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sheep : MonoBehaviour {
-    public static TimingSheep_Manager TS_Manager;
+    public static Sheep sh = null;
 
     //public GameObject[] SheepPreFab;//불러올 양
     public GameObject SheepPreFab;//불러올 양
@@ -23,12 +23,9 @@ public class Sheep : MonoBehaviour {
     //private Vector3 StartPosition;
     //private Vector3 CenterPosition;
     //private Vector3 EndPosition;
-    private Vector3[] PositionPoints;
-    private Vector3 currPosition;
-    private int PointsIndex = 0;
-
-    private float distanceLength_SC;//시작~중간 거리
-    private float distanceLength_CE;//중간~마지막 거리
+    public Vector3[] PositionPoints;
+    public Vector3 currPosition;
+    public int PointsIndex = 0;
 
     //몬스터를 발생시킬 주기
     public float createTime;
@@ -82,21 +79,22 @@ public class Sheep : MonoBehaviour {
         if (Vector3.Distance(PositionPoints[PointsIndex], currPosition) == 0f)
         {
             PointsIndex++;
-            if(Vector3.Distance(PositionPoints[2], currPosition) == 0f)
+            isMoveClick = false;
+            if (Vector3.Distance(PositionPoints[2], currPosition) == 0f)
             {
                 Destroy(gameObject);
                 Sheepcount++;
                 PointsIndex = 0;
             }
-        }
 
-        if(Vector3.Distance(PositionPoints[1], currPosition) == 0f)
-        {
-            //TS_Manager.isCatch = true;
-            isMoveClick = true;
+            if (Vector3.Distance(PositionPoints[1], currPosition) == 0f)
+            {
+                //TimingSheep_Manager.TM.isCatch = true;
+                isMoveClick = true;
+                Debug.Log("들어옴00");
+            }
         }
-
-        isMoveClick = false;
+        else isMoveClick = false;
     }
 
 }

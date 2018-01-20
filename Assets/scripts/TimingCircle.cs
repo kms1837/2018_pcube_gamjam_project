@@ -16,34 +16,20 @@ public class TimingCircle : MonoBehaviour {
 	void Update () {
 		
 	}
+    
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "SheepPF")
+           Debug.Log("닿는 중");
+    }
+    //private void OnTriggerStay2D(Collider other)
+    //{
+    //    if (other.gameObject.tag == "SheepPF")
+    //        Debug.Log("닿는 중");
+    //}
 
-    void OnTriggerEnter(Collider col)
-    {
-        Debug.Log("닿기 시작");
-        //if (collision.gameObject.tag == "SheepPF")
-        //{
-        //    target = collision.gameObject;
-        //    if (!isTargeted)   // 순찰 상태
-        //    {
-        //        GetComponentInParent<>().targeting(collision.gameObject);
-        //        collider2d.size = new Vector2(attackRange, collider2d.size.y);
-        //        isTargeted = true;
-        //    }
-        //    else //쫒는 상태
-        //    {
-        //        StartCoroutine(waitAndAttack());
-        //        GetComponentInParent<following>().isAttacking = true;
-        //    }
-        //}
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "CirCle")
-            Debug.Log("닿는 중");
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log("닿기 끝");
-    }
+    //private void OnTriggerExit2D(Collider other)
+    //{
+    //    Debug.Log("닿기 끝");
+    //}
 }

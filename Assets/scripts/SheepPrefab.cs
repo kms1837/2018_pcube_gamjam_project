@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class SheepPrefab : MonoBehaviour
 {
-    public static TimingSheep_Manager TS_Manager;
+    public static SheepPrefab SP;
 
     //public GameObject[] SheepPreFab;//불러올 양
     public GameObject SheepPF;//불러올 양
     public Transform CanvasS;
 
     public Transform SheepTransForm;
+
+    public GameObject SheepObject;
     public int Sheepcount = 0; //양 몇 마리 지나갔니?
 
     /*------------------------- 
@@ -44,7 +46,7 @@ public class SheepPrefab : MonoBehaviour
         //print(Sheepcount);
         times += Time.deltaTime;
 
-        if (times>5)
+        if (times > 5)
         {
             times = 0;
             GameObject Sheep = Instantiate(SheepPF, Vector2.zero, Quaternion.identity) as GameObject;
@@ -53,11 +55,12 @@ public class SheepPrefab : MonoBehaviour
             Sheepcount++;
             //StartCoroutine(this.createSheep());
         }
-        print(Sheepcount);
-
-        if(Sheepcount == 20)
+        //print(Sheepcount);
+        
+        if(Sheepcount > 20)
         {
-            TS_Manager.GameOver();
+            GetComponent<AudioSource>().Pause();
+            TimingSheep_Manager.TM.GameOver();
         }
     }
     

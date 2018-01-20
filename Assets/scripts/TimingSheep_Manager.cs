@@ -14,6 +14,8 @@ public class TimingSheep_Manager : MonoBehaviour {
     public GameObject Btn_CatchTxt;//잡았다! 버튼
     public GameObject[] SheepPreFab_Mini;//누적될 미니 양
     public GameObject Round; //
+    public GameObject TS_Sheep = null;
+    public Vector3 TScurrPosition;
 
     public Text Txt_MsgText;//잡았는지 표시될 텍스트
     public Text Txt_Score;//잡으면 증가될 점수
@@ -49,10 +51,13 @@ public class TimingSheep_Manager : MonoBehaviour {
     void Awake()
     {
         TimingSheep_Manager.TM = this;
+        
     }
     // Update is called once per frame
     void Update () {
         //transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * Time.deltaTime);
+        TScurrPosition = TS_Sheep.transform.position;
+        print(TScurrPosition);
     }
 
     public void Return_ExpressionBasic()
@@ -68,7 +73,12 @@ public class TimingSheep_Manager : MonoBehaviour {
 
     public void Btn_MsgText_Click()
     {
-        if(ispopedup == false && isCatch == false)
+        if(TScurrPosition.x > 790.0f)
+        { Debug.Log("눌러야돼!"); }
+        if(ispopedup == false || isCatch == false || 
+            TS_Sheep.transform.position.x > 800.0f && 
+            TS_Sheep.transform.position.y == 976.0f &&
+            TS_Sheep.transform.position.y > 900.0f)
         {
             isCatch = true;
 
@@ -81,7 +91,7 @@ public class TimingSheep_Manager : MonoBehaviour {
             Btn_CatchTxt.SetActive(true);
 
             Txt_MsgText.text = "좋아!";
-            Debug.Log("누름");
+
             Score += 1;
 
             Txt_Score.text = Score.ToString(); // 점수 표시
@@ -94,7 +104,8 @@ public class TimingSheep_Manager : MonoBehaviour {
             }
         }
 
-        else if(ispopedup == true && isCatch == true)
+       if(ispopedup == true || isCatch == true || 
+            TS_Sheep.transform.position.y < 900.0f)
         {
             isCatch = false;
 
