@@ -33,7 +33,7 @@ public class Ending : MonoBehaviour
     }
 
     private void creditLabelUp() {
-        Rect view = Camera.main.rect;
+        Rect view = GameObject.Find("Canvas").transform.GetComponent<RectTransform>().rect;
         Vector2 labelPosition = CreditLabel.transform.position;
 
         labelPosition.y += 4.0f;

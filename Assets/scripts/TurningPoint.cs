@@ -29,11 +29,6 @@ class answernObject
 }
 
 public class TurningPoint : MonoBehaviour {
-    void Awake()
-    {
-        Screen.SetResolution(900, 1600, false);
-        //1920x1080
-    }
     //장면 상태 저장
     public static string turningFileName = string.Empty;
     public static string answerType = string.Empty; // 전에 선택한 선택지 타입
@@ -66,7 +61,20 @@ public class TurningPoint : MonoBehaviour {
     const float answerRotationSpeed = 5.0f;
     const int endingPoint = 5;
 
+    private Rect originResolution;
+    private Rect resizeResolution;
+
+    void Awake()
+    {
+        Transform canvas = GameObject.Find("Canvas").transform;
+        Rect originSize = canvas.GetComponent<RectTransform>().rect;
+        originResolution = new Rect(0, 0, originSize.width, originSize.height);
+        resizeResolution = new Rect(0, 0, originResolution.width * canvas.localScale.x, originResolution.width * canvas.localScale.x);
+    }
+
     private void Start () {
+        QuestionLabel.text = "";
+
         if (turningFileName == string.Empty) {
             startPanel.SetActive(true);
             InvokeRepeating("startFade", 0, 1.0f / 60.0f);
@@ -185,7 +193,7 @@ public class TurningPoint : MonoBehaviour {
     }
 
     private void duplicateAnswer() {
-        Rect view = Camera.main.rect;
+        Transform view = GameObject.Find("Canvas").transform;
         int answerCounter = nowQuetion.answer.Count;
 
         answerGroup = new GameObject("AnswerGroup").transform;
@@ -194,7 +202,7 @@ public class TurningPoint : MonoBehaviour {
 
         int index = 0;
         foreach (answernObject answer in nowQuetion.answer) {
-            GameObject newBtn = Instantiate(AnswerBtn, new Vector2(view.width, view.height), Quaternion.identity);
+            GameObject newBtn = Instantiate(AnswerBtn, new Vector2(Screen.width, Screen.height), Quaternion.identity);
             Button btnObj = newBtn.GetComponent<Button>();
             int localIndex = index;
             btnObj.onClick.AddListener(() => { selectAnswer(localIndex); });
@@ -205,8 +213,10 @@ public class TurningPoint : MonoBehaviour {
             newBtn.transform.SetParent(answerGroup);
             newBtn.transform.localPosition = new Vector2(300, 300);
 
+            newBtn.transform.localScale = new Vector3(view.localScale.x, view.localScale.y, 1);
+
             if (index >= (answerCounter/2)) {
-                newBtn.transform.localScale = new Vector3(-1, 1, 1);
+                newBtn.transform.localScale = new Vector3(-view.localScale.x, view.localScale.y, 1);
                 newBtn.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
             }
 
@@ -218,9 +228,11 @@ public class TurningPoint : MonoBehaviour {
     }
 
     private void answerRotation() {
-        Rect view = Camera.main.rect;
-        float width = (view.width / 2) - 100;
-        float height = (view.height / 2) - 380;
+        Transform view = GameObject.Find("Canvas").transform;
+        Rect btnSize = AnswerBtn.GetComponent<RectTransform>().rect;
+        float width = (resizeResolution.width / 2) - ((btnSize.width * view.localScale.x)/4);
+        float height = (resizeResolution.height / 2) - ((btnSize.height * view.localScale.y)/2);
+        // 버튼 최대 위치 (btnSize.width * view.localScale.x은 해상도 변경후의 버튼 사이즈 수치입니다)
         float rx = 0.0f, ry = 0.0f;
         float rad = 0.0f;
 
@@ -236,7 +248,8 @@ public class TurningPoint : MonoBehaviour {
 
             rad = (deg * (i+1)) * (Mathf.PI / 180);
             rx = width * Mathf.Cos(rad);
-            ry = height * Mathf.Sin(rad) + 250;
+            ry = height * Mathf.Sin(rad) + ((btnSize.height * view.localScale.y));
+            // 버튼 위치
             child.localPosition = new Vector2(rx, ry);
         }
 
