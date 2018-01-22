@@ -96,5 +96,4 @@ public class Sheep : MonoBehaviour {
         }
         else isMoveClick = false;
     }
-
 }

@@ -115,7 +115,7 @@ public class TimingSheep_Manager : MonoBehaviour {
             Expression_Success.SetActive(false);
 
             Txt_MsgText.text = "아...안돼...";
-            Debug.Log("놓침");
+            //Debug.Log("놓침");
 
             Invoke("Return_ExpressionBasic", 1.0f);
             ispopedup = false;

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SheepPrefab : MonoBehaviour
-{
+public class SheepPrefab : MonoBehaviour {
     public static SheepPrefab SP;
 
     //public GameObject[] SheepPreFab;//불러올 양
