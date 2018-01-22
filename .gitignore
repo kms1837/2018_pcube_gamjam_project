@@ -4,7 +4,7 @@ metadata/
 Library/
 ProjectSettings/
 .vs/
-*.meta
+
 *.log
 *.info
 *.sln
