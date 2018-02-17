@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DataLoader : MonoBehaviour
 {
-    public GameObject gamedata;
+    //public GameObject gamedata;
 
     void Awake()
     {
-        if (TimingSheep_Manager.TM == null)
-            Instantiate(gamedata);
+        //if (TimingSheep_Manager.TM == null)
+          //  Instantiate(gamedata);
     }
 
 }

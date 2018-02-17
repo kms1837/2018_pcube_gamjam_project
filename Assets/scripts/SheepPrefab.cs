@@ -59,24 +59,7 @@ public class SheepPrefab : MonoBehaviour {
         if(Sheepcount > 20)
         {
             GetComponent<AudioSource>().Pause();
-            TimingSheep_Manager.TM.GameOver();
+            //TimingSheep_Manager.TM.GameOver();
         }
     }
-    
-    //IEnumerator createSheep()
-    //{
-    //    while (!TS_Manager.isGameOver && PointsIndex < PositionPoints.Length)
-    //    {
-    //        int SheepCount = (int)GameObject.FindGameObjectsWithTag("SheepPreFab").Length;
-
-    //        if (SheepCount < 2)
-    //        {
-    //            yield return new WaitForSeconds(createTime);
-
-    //            Instantiate(SheepPreFab);
-    //            gameObject.SetActive(true);
-    //        }
-    //        else yield return null;
-    //    }
-    //}
 }

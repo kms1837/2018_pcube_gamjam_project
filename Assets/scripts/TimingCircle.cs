@@ -19,7 +19,7 @@ public class TimingCircle : MonoBehaviour {
     
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "SheepPF")
+        //if (collision.gameObject.tag == "SheepPF")
            //Debug.Log("닿는 중");
     }
     //private void OnTriggerStay2D(Collider other)

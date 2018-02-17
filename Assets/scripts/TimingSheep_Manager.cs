@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TimingSheep_Manager : MonoBehaviour {
 
-    public static TimingSheep_Manager TM = null;
+    //public static TimingSheep_Manager TM = null;
 
     public static SheepPrefab sh;
 
@@ -39,6 +39,11 @@ public class TimingSheep_Manager : MonoBehaviour {
      */
     public bool ispopedup = false;
 
+    public int totalSheep; // 나오는 양의 수
+    public Transform SheepGroup; // 복제 양이 속한 부모 오브젝트
+    public Transform CatchCircle; // 잡는 기준 오브젝트
+    private int duplicateSheep; // 복제한 양의 수
+
     // Use this for initialization
     void Start () {
         Screen.SetResolution(Screen.width, Screen.width * 9 / 16, true); // 해상도 고정
@@ -47,18 +52,48 @@ public class TimingSheep_Manager : MonoBehaviour {
         Btn_Catch.SetActive(true);
         Btn_Catch2.SetActive(false);
         Btn_CatchTxt.SetActive(false);
+
+        duplicateSheep = 1;
+
+        Return_ExpressionBasic();
+    }
+
+    public void sheepCountUp() {
+        duplicateSheep++;
     }
 
     void Awake()
     {
-        TimingSheep_Manager.TM = this;
-        
+        //TimingSheep_Manager.TM = this;
     }
+
     // Update is called once per frame
     void Update () {
-        //transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * Time.deltaTime);
-        TScurrPosition = TS_Sheep.transform.position;
-        print(TScurrPosition);
+
+    }
+
+    public void catchSheep() {
+        Return_ExpressionBasic();
+
+        Sheep sheepObj = SheepGroup.GetChild(0).GetComponent<Sheep>();
+        if (sheepObj.Triger) {
+            Score += 1;
+            Txt_Score.text = Score.ToString(); // 점수 표시
+            Txt_MsgText.text = "좋아!";
+
+            Expression_Success.SetActive(true);
+            Btn_CatchTxt.SetActive(true);
+
+        } else {
+            Expression_Frown.SetActive(true);
+
+            Txt_MsgText.text = "아...안돼...";
+        }
+
+        sheepObj.newLife();
+
+        this.CancelInvoke();
+        Invoke("Return_ExpressionBasic", 1.0f);
     }
 
     public void Return_ExpressionBasic()
@@ -70,8 +105,11 @@ public class TimingSheep_Manager : MonoBehaviour {
         Btn_Catch.SetActive(true);
         Btn_Catch2.SetActive(false);
         Btn_CatchTxt.SetActive(false);
+
+        Txt_MsgText.text = "Zzz...";
     }
 
+    /*
     public void Btn_MsgText_Click()
     {
         if(TScurrPosition.x > 790.0f)
@@ -120,7 +158,7 @@ public class TimingSheep_Manager : MonoBehaviour {
             Invoke("Return_ExpressionBasic", 1.0f);
             ispopedup = false;
         }
-    }
+    }*/
 
     public void GameOver()
     {
