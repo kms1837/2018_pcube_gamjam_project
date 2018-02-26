@@ -84,6 +84,8 @@ public class clock : MonoBehaviour {
         string hourStr = hour / 10 <= 0 ? string.Format("0{0}", hour.ToString()) : hour.ToString();
         string secondStr = second / 10 <= 0 ? string.Format("0{0}", second.ToString()) : second.ToString();
 
+        TurningPoint.gameState = false;
+
         int result = hour % startHour;
         if (hour == resultData.hour && minute < resultData.minute) {
             resultStr = resultData.success;

@@ -6,22 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class TimingSheep_Manager : MonoBehaviour {
 
-    //public static TimingSheep_Manager TM = null;
-
-    public static SheepPrefab sh;
-
-    public GameObject Btn_Catch;//잡았다! 버튼
-    public GameObject Btn_Catch2;//잡았다! 버튼
-    public GameObject Btn_CatchTxt;//잡았다! 버튼
-    public GameObject[] SheepPreFab_Mini;//누적될 미니 양
-    public GameObject Round; //
-    public GameObject TS_Sheep = null;
-    public Vector3 TScurrPosition;
+    public GameObject Btn_Catch; //잡았다! 버튼
+    public GameObject Btn_CatchTxt; //잡았다! 버튼
 
     public Text Txt_MsgText;//잡았는지 표시될 텍스트
     public Text Txt_Score;//잡으면 증가될 점수
 
-    public int Score = 0;//실제 계산될 점수 변수
+    private int score = 0;//실제 계산될 점수 변수
+
     /*---------------------
      * 표정변화 오브젝트
      ----------------------*/
@@ -31,26 +23,22 @@ public class TimingSheep_Manager : MonoBehaviour {
 
     public GameObject Ending_Notsleep;//엔딩
 
-    public bool isCatch = false;//양 잡았는지 체크
-    public bool isGameOver = false;//게임오버 되었는지?
-
     /*
      * 다른팝업작업 진행검사
      */
     public bool ispopedup = false;
 
-    public int totalSheep; // 나오는 양의 수
     public Transform SheepGroup; // 복제 양이 속한 부모 오브젝트
     public Transform CatchCircle; // 잡는 기준 오브젝트
     private int duplicateSheep; // 복제한 양의 수
 
-    // Use this for initialization
-    void Start () {
-        Screen.SetResolution(Screen.width, Screen.width * 9 / 16, true); // 해상도 고정
-        Txt_Score.text = Score.ToString(); // 점수 표시
+    private const int SuccessValue = 10; // 성공조건
+    private const int MaxDuplication = 20; // 최대복제수
+
+    private void Start () {
+        Txt_Score.text = score.ToString(); // 점수 표시
 
         Btn_Catch.SetActive(true);
-        Btn_Catch2.SetActive(false);
         Btn_CatchTxt.SetActive(false);
 
         duplicateSheep = 1;
@@ -60,25 +48,21 @@ public class TimingSheep_Manager : MonoBehaviour {
 
     public void sheepCountUp() {
         duplicateSheep++;
-    }
 
-    void Awake()
-    {
-        //TimingSheep_Manager.TM = this;
-    }
-
-    // Update is called once per frame
-    void Update () {
-
+        if (duplicateSheep > MaxDuplication) {
+            gameOver();
+        }
     }
 
     public void catchSheep() {
         Return_ExpressionBasic();
 
+        Expression_Basic.SetActive(false);
+
         Sheep sheepObj = SheepGroup.GetChild(0).GetComponent<Sheep>();
         if (sheepObj.Triger) {
-            Score += 1;
-            Txt_Score.text = Score.ToString(); // 점수 표시
+            score += 1;
+            Txt_Score.text = score.ToString(); // 점수 표시
             Txt_MsgText.text = "좋아!";
 
             Expression_Success.SetActive(true);
@@ -90,10 +74,10 @@ public class TimingSheep_Manager : MonoBehaviour {
             Txt_MsgText.text = "아...안돼...";
         }
 
-        sheepObj.newLife();
-
         this.CancelInvoke();
         Invoke("Return_ExpressionBasic", 1.0f);
+
+        sheepObj.newLife();
     }
 
     public void Return_ExpressionBasic()
@@ -103,75 +87,30 @@ public class TimingSheep_Manager : MonoBehaviour {
         Expression_Success.SetActive(false);
 
         Btn_Catch.SetActive(true);
-        Btn_Catch2.SetActive(false);
         Btn_CatchTxt.SetActive(false);
 
         Txt_MsgText.text = "Zzz...";
     }
-
-    /*
-    public void Btn_MsgText_Click()
+    
+    public void gameOver()
     {
-        if(TScurrPosition.x > 790.0f)
-        { Debug.Log("눌러야돼!"); }
-        if(ispopedup == false || isCatch == false || 
-            TS_Sheep.transform.position.x > 800.0f && 
-            TS_Sheep.transform.position.y == 976.0f &&
-            TS_Sheep.transform.position.y > 900.0f)
-        {
-            isCatch = true;
+        this.CancelInvoke();
 
-            Expression_Basic.SetActive(false);
-            Expression_Frown.SetActive(false);
-            Expression_Success.SetActive(true);
-
-            Btn_Catch.SetActive(false);
-            Btn_Catch2.SetActive(true);
-            Btn_CatchTxt.SetActive(true);
-
-            Txt_MsgText.text = "좋아!";
-
-            Score += 1;
-
-            Txt_Score.text = Score.ToString(); // 점수 표시
-            
-            Invoke("Return_ExpressionBasic", 1.0f);
-            ispopedup = true;
-
-            if(Score == 21) {
-                GameOver();
-            }
-        }
-
-       if(ispopedup == true || isCatch == true || 
-            TS_Sheep.transform.position.y < 900.0f)
-        {
-            isCatch = false;
-
-            Expression_Basic.SetActive(false);
-            Expression_Frown.SetActive(true);
-            Expression_Success.SetActive(false);
-
-            Txt_MsgText.text = "아...안돼...";
-            //Debug.Log("놓침");
-
-            Invoke("Return_ExpressionBasic", 1.0f);
-            ispopedup = false;
-        }
-    }*/
-
-    public void GameOver()
-    {
         TurningPoint.gameState = true;
 
-        if (isGameOver == false)
-        {
-            isGameOver = true;
+        Destroy(SheepGroup.gameObject);
+        Destroy(Btn_Catch.gameObject);
+
+        if (score < SuccessValue) {
             Ending_Notsleep.SetActive(true);
-            Time.timeScale = 0;
             GetComponent<AudioSource>().Pause();
+            TurningPoint.gameState = false;
         }
 
+        Invoke("endedMoveScene", 3.0f);
+    }
+
+    private void endedMoveScene() {
         SceneManager.LoadScene("turning_point");
     }
 }

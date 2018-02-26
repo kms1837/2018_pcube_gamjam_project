@@ -85,8 +85,6 @@ public class Sheep : MonoBehaviour {
         float accuracy = (inWidth / trigerRect.width) * 100;
 
         triger = accuracy >= 77 ? true : false;
-
-        Debug.Log(accuracy);
     }
 
     private void OnTriggerExit2D(Collider2D collision) {

@@ -86,6 +86,7 @@ public class TurningPoint : MonoBehaviour {
     }
 
     private void Update () {
+
     }
 
     private void pushFail(answernObject answern) {
@@ -109,6 +110,7 @@ public class TurningPoint : MonoBehaviour {
                 pushFail(selectAnswern);
             }
 
+            /*
             Debug.Log(nowQuetion.question);
             Debug.Log("==========================");
             Debug.Log(answerType);
@@ -116,6 +118,7 @@ public class TurningPoint : MonoBehaviour {
             Debug.Log("ap :" + answerPoint.ToString());
             Debug.Log("sp :" + selectAnswern.next);
             Debug.Log("==========================");
+            */
 
             int nextIndex = int.Parse(selectAnswern.next);
             nextQuestion(nextIndex);
