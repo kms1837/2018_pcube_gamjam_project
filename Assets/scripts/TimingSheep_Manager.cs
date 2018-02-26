@@ -28,7 +28,9 @@ public class TimingSheep_Manager : MonoBehaviour {
      */
     public bool ispopedup = false;
 
+    public Transform MiniSheep; // 복제할 작은양
     public Transform SheepGroup; // 복제 양이 속한 부모 오브젝트
+    public Transform MiniSheepGroup; // 작은 복제 양이 속한 부모 오브젝트
     public Transform CatchCircle; // 잡는 기준 오브젝트
     private int duplicateSheep; // 복제한 양의 수
 
@@ -64,6 +66,16 @@ public class TimingSheep_Manager : MonoBehaviour {
             score += 1;
             Txt_Score.text = score.ToString(); // 점수 표시
             Txt_MsgText.text = "좋아!";
+
+            Transform newMiniSheep = Instantiate(MiniSheep, MiniSheepGroup).transform;
+
+            Rect groupRect = MiniSheepGroup.GetComponent<RectTransform>().rect;
+            Rect sheepRect = MiniSheep.GetComponent<RectTransform>().rect;
+            float groupWidth = (groupRect.width / 2) -  (sheepRect.width/2);
+            float groupHeight = (groupRect.height / 2) - (sheepRect.height / 2);
+
+            newMiniSheep.localPosition = new Vector2(Random.Range(groupWidth * -1, groupWidth), Random.Range(groupHeight*-1, groupHeight));
+            newMiniSheep.Rotate(0, 0, Random.Range(0, 360));
 
             Expression_Success.SetActive(true);
             Btn_CatchTxt.SetActive(true);

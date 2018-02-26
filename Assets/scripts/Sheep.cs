@@ -66,6 +66,9 @@ public class Sheep : MonoBehaviour {
         Transform newSheep = Instantiate(this.gameObject, Group).transform;
         newSheep.name = "Sheep";
         Manager.GetComponent<TimingSheep_Manager>().sheepCountUp();
+
+        Sheep sheepOption = newSheep.GetComponent<Sheep>();
+        sheepOption.Speed = 1 + Random.Range(0.6f, 1.5f);
         Destroy(this.gameObject);
     }
 
